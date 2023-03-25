@@ -32,3 +32,8 @@ build
 *.exe
 *.out
 *.app
+
+# Development files
+.cache
+Testing
+*.json
