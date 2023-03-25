@@ -1,10 +1,10 @@
+#include "rope.h"
+
 #include <iostream>
 #include <vector>
 
 #include "CGL/vector2D.h"
-
 #include "mass.h"
-#include "rope.h"
 #include "spring.h"
 
 namespace CGL {
@@ -59,7 +59,6 @@ void Rope::simulateEuler(float delta_t, Vector2D gravity) {
     // TODO (Part 4.1): Add damping forces
 
     // TODO Apply forces as appropriate.
-
   }
 
   for (auto &m : masses) {
@@ -69,20 +68,18 @@ void Rope::simulateEuler(float delta_t, Vector2D gravity) {
 
       // F = ma => a = F/m
       Vector2D acceleration = m->forces / m->mass + gravity;
-      Vector2D old_velocity = m->velocity;
-      m->velocity = old_velocity + acceleration * delta_t;
+      m->velocity = m->velocity + acceleration * delta_t;
       m->position = m->position + m->velocity * delta_t;
     }
 
     // TODO Reset all forces on each mass
     m->forces = Vector2D(0.0, 0.0);
-
   }
 }
 
 void Rope::simulateVerlet(float delta_t, Vector2D gravity) {
   // TODO (Part 3.1): Clear forces
-  
+
   for (auto &m : masses) {
     m->forces = Vector2D(0.0, 0.0);
   }
@@ -107,16 +104,18 @@ void Rope::simulateVerlet(float delta_t, Vector2D gravity) {
 
       // F = ma => a = F/m
       Vector2D acceleration = m->forces / m->mass + gravity;
-      // m->position = m->position + (m->position - m->last_position) + acceleration * delta_t * delta_t;
+      // m->position = m->position + (m->position - m->last_position) +
+      //               acceleration * delta_t * delta_t;
 
       // TODO (Part 4.2): Add global Verlet damping
 
       double damping_factor = 0.0003;
-      m->position = m->position + (1 - damping_factor) * (m->position - m->last_position) + acceleration * delta_t * delta_t;
+      m->position = m->position +
+                    (1 - damping_factor) * (m->position - m->last_position) +
+                    acceleration * delta_t * delta_t;
 
       m->last_position = temp_position;
-
     }
   }
 }
-}
+}  // namespace CGL

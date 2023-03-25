@@ -1,6 +1,7 @@
 #ifndef ROPE_H
 #define ROPE_H
 
+#include <vector>
 #include "CGL/CGL.h"
 #include "mass.h"
 #include "spring.h"
